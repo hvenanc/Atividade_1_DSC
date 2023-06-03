@@ -12,8 +12,13 @@ public class ItemColetaBean {
 
 	private ArrayList<ItemColeta> itensColeta = new ArrayList<>();
 	
+	
 	public ArrayList<ItemColeta> getItens() {
 		return itensColeta;
+	}
+	
+	public boolean validaItem(ItemColeta item) {
+		return item.getQuantidade() > 0;
 	}
 	
 	public void inserirItem(ItemColeta item) {

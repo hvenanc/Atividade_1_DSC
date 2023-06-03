@@ -8,7 +8,7 @@ public class Usuario {
 	private String nomeCompleto;
 	private String email;
 	private String cpf;
-	private Date dataNasc;
+	private String dataNasc;
 	private String cep;
 	private String senha;
 	
@@ -44,11 +44,11 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 	
-	public Date getDataNasc() {
+	public String getDataNasc() {
 		return dataNasc;
 	}
 	
-	public void setDataNasc(Date dataNasc) {
+	public void setDataNasc(String dataNasc) {
 		this.dataNasc = dataNasc;
 	}
 	
