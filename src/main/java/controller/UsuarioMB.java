@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import jakarta.ejb.EJB;
@@ -35,6 +35,12 @@ public class UsuarioMB {
 		usuario.setCep(this.cep);
 		usuario.setSenha(this.senha);
 		
+		this.usuarioBean.adcionarUsuario(usuario);
+		
+	}
+	
+	public List<Usuario> buscarUsuarios() {
+		return usuarioBean.getUsuarios();
 	}
 	
 	public String getNomeUsuario() {

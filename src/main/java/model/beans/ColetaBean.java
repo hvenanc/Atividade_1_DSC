@@ -1,27 +1,53 @@
 package model.beans;
 
-import java.util.ArrayList;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+
+import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import model.entities.Coleta;
+import repository.ColetaRepository;
 
 @Local
 @Stateless
 public class ColetaBean {
 
-private ArrayList<Coleta> coletas = new ArrayList<>();
+
+	@EJB
+	ColetaRepository coletaRepository;
 	
-	public ArrayList<Coleta> getColetas() {
-		return coletas;
+	public boolean validaData(Coleta coleta) {
+
+		try {
+			String data = coleta.getData();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate  d = LocalDate.parse(data, formatter);
+			return true;
+		} catch (DateTimeParseException e) {
+			return false;
+		}
 	}
 	
-	public void criarColeta(Coleta coleta) {
-		coletas.add(coleta);
+	public  void adicionarColeta(Coleta coleta) {
+		if(validaData(coleta) && coleta.getItem() != null && coleta.getUsuario() != null) {
+			this.coletaRepository.cadstrarColeta(coleta);
+		}
+
 	}
 	
 	public void removerColeta(Coleta coleta) {
-		coletas.remove(coleta);
+		if(coleta != null) {
+			this.coletaRepository.removerColeta(coleta);
+		}
 	}
+	
+	public List<Coleta> getColetas() {
+		return this.coletaRepository.getColetas();
+	}
+	
 	
 }

@@ -1,32 +1,37 @@
 package model.beans;
 
-import java.util.ArrayList;
 
+import java.util.List;
+
+import jakarta.ejb.EJB;
 import jakarta.ejb.Local;
 import jakarta.ejb.Stateless;
 import model.entities.ItemColeta;
+import repository.ItemColetaRepository;
 
 @Local
 @Stateless
 public class ItemColetaBean {
 
-	private ArrayList<ItemColeta> itensColeta = new ArrayList<>();
+	@EJB
+	ItemColetaRepository itensRepository;
 	
-	
-	public ArrayList<ItemColeta> getItens() {
-		return itensColeta;
-	}
-	
-	public boolean validaItem(ItemColeta item) {
-		return item.getQuantidade() > 0;
-	}
 	
 	public void inserirItem(ItemColeta item) {
-		itensColeta.add(item);
+		if(item != null && item.getQuantidade() > 0 && item.getDescricao() != null && item.getNome() != null) {
+			this.itensRepository.inserirItem(item);
+		}
 	}
 	
 	public void removerItem(ItemColeta item) {
-		itensColeta.remove(item);
+		if(item != null) {
+			this.itensRepository.removerItem(item);
+		}
+	}
+	
+	
+	public List<ItemColeta> getItens() {
+		return this.itensRepository.getItens();
 	}
 	
 }
