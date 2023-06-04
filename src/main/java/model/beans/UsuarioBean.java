@@ -1,8 +1,7 @@
 package model.beans;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -35,14 +34,16 @@ public class UsuarioBean {
 
 	public boolean validaData(Usuario usuario) {
 
-		try {
-			String data = usuario.getDataNasc();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			LocalDate d = LocalDate.parse(data, formatter);
-			return true;
-		} catch (DateTimeParseException e) {
-			return false;
-		}
+		String data = usuario.getDataNasc();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setLenient(false);
+
+        try {
+            sdf.parse(data);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
 	}
 	
 	public boolean validaCPF(String CPF) {
